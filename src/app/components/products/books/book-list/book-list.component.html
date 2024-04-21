@@ -1,0 +1,14 @@
+<p>
+  book-list works!</p>
+  <br>
+<section>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let book of this.getAll()">
+      {{book.title}}
+    </li>
+    <div *ngIf="this.getAll().length == 0" class="alert alert-warning" role="alert">
+      Not found
+    </div>
+
+  </ul>
+</section>
