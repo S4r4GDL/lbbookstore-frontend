@@ -1,0 +1,12 @@
+$main-color: #beb8e4;
+$button-toolbar-color: #565365;
+.example-button-row {
+  display: table-cell;
+  max-width: 600px;
+}
+.mat-toolbar-spacer{
+  flex: 1 1 auto;
+}
+.mat-toolbar{
+  background: $main-color;
+}
