@@ -15,23 +15,23 @@ import {NgForOf, NgIf} from "@angular/common";
 })
 export class BookListComponent implements OnInit{
 
-  private books : Book[] = [
-    {
-      id: 1, title: 'The yellow heart',
-      author: 'Pablo Neruda', publisher: 'intrincina',
-      edition: '3ed pk', lastUpdate: new Date(),
-      active: true,
-      yearOfRelease: 1982,
-      price: 55.6,
-      quantity: 10
-    }
-  ];
-  constructor(public bookService : BookService) {}
+  private books : Book[] = [];
+  constructor(public bookService : BookService) {
+  }
 
   ngOnInit(): void {
+    this.books[0] ={
+        id: 1, title: 'The yellow heart',
+        author: 'Pablo Neruda', publisher: 'intrincina',
+        edition: '3ed pk', lastUpdate: new Date(),
+        active: true,
+        yearOfRelease: 1982,
+        price: 55.6,
+        quantity: 10
+      };
+
     this.bookService.create(this.books[0]);
     this.books = this.bookService.getAll();
-
   }
 
   getAll(): Book[]{

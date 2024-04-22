@@ -23,10 +23,10 @@ export class BookService {
 
 
   create(newBook : Book){
-
-      newBook.id = this.books.length > 0 ?  this.books.length + 1 : 1;
-      this.books.push(newBook);
-
+      if(!this.getById(newBook.id)) {
+        newBook.id = this.books.length > 0 ? this.books.length + 1 : 1;
+        this.books.push(newBook);
+      }
   }
 
   update(bookToUpdate : Book){
