@@ -1,14 +1,87 @@
-<p>
-  book-list works!</p>
-  <br>
 <section>
-  <ul class="list-group">
-    <li class="list-group-item" *ngFor="let book of this.getAll()">
-      {{book.title}}
-    </li>
-    <div *ngIf="this.getAll().length == 0" class="alert alert-warning" role="alert">
-      Not found
-    </div>
+  <div class="mat-elevation-z8">
 
-  </ul>
+      <div class="table-title">
+        <h1>Books</h1>
+      </div>
+      <br>
+      <div>
+        <button mat-flat-button color="primary" class = "crud-button" mat-raised-button
+                matTooltip="Add a new book" [routerLink]="['/new']">
+          Add new
+        </button>
+      </div>
+    @if (dataSource.data.length > 0){
+      <table mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="select" >
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox [color]="" (change)="$event ? toggleAllRows() : null"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox [color]="" (click)="$event.stopPropagation()"
+                          (change)="$event ? selection.toggle(row) : null"
+                          [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef> Title </th>
+          <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="author">
+          <th mat-header-cell *matHeaderCellDef> Author </th>
+          <td mat-cell *matCellDef="let element"> {{element.author}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef> Quantity </th>
+          <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef> Price </th>
+          <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator
+                     [pageSize]="10"
+                     [pageSizeOptions]="[10, 25, 100]"
+                     aria-label="Select page">
+      </mat-paginator>
+
+    }
+    @else {
+      <div>
+        <mat-card>
+          <mat-card-content>Sorry, there's no books</mat-card-content>
+        </mat-card>
+      </div>
+
+    }
+  </div>
 </section>
+
+
+
+
+
+
+
+
+
+

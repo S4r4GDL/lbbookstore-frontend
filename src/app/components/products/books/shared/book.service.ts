@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
 import {Book} from "./book";
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class BookService {
   private books : Book[] = [];
-  constructor() {
-    this.loadList();
+  //TODO : Conectar com o back
+  private http!: HttpClient;
+  constructor(http:HttpClient) {
+    this.http = http;
   }
 
   private storeList(){
@@ -47,8 +52,10 @@ export class BookService {
     }
 
   }
-  getAll(): Book[]{
-    return this.books;
+  getAll(): Observable<Book[]>{
+    console.log("getAll no service");
+    return this.http.get<Book[]>("http://localhost:8080/api/v1/books");
+
   }
 
   getById(id: number) {

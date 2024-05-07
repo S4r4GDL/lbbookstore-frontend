@@ -7,6 +7,7 @@ export class Book{
   publisher! : string;
   price! : number;
   quantity! : number;
+  description!: string;
   lastUpdate! : Date;
   active! : boolean;
 
