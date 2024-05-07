@@ -5,12 +5,17 @@ import {BookListComponent} from "./components/products/books/book-list/book-list
 import {MugListComponent} from "./components/products/mugs/mugs-list/mug-list.component";
 import {CartListComponent} from "./components/products/cart/cart-list/cart-list.component";
 import {AccountComponent} from "./components/account/account/account.component";
+import {resolve} from "@angular/compiler-cli";
+import {BookResolve} from "./components/products/books/shared/resolve";
+import {BookFormComponent} from "./components/products/books/book-form/book-form.component";
 
 export const routes: Routes = [
-    {path:'', component: HomeComponent},
+    {path:'', component: HomeComponent, resolve: {bookData: BookResolve }},
     {path:'books', component: BookListComponent},
     {path:'products', component: ProductsListComponent},
     {path:'mugs', component:MugListComponent},
     {path:'cart', component: CartListComponent},
-    {path:'account', component: AccountComponent}
+    {path:'account', component: AccountComponent},
+    {path: 'new', component: BookFormComponent},
+    {path: 'edit/:id', component: BookFormComponent}
 ];
