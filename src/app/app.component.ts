@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {RouterLink, RouterOutlet} from '@angular/router';
 import {HomeComponent} from "./components/home/home.component";
 import {HeaderComponent} from "./components/header/header.component";
@@ -18,5 +18,4 @@ import {MatIcon} from "@angular/material/icon";
 })
 export class AppComponent {
   title = 'LBbookstore';
-  showFiller: boolean = false;
 }
