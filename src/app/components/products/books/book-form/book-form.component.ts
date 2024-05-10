@@ -46,7 +46,7 @@ export class BookFormComponent implements OnInit  {
   private book : Book = new Book();
   private id !: number;
 
-  constructor(public bookService : BookService, private route: ActivatedRoute, private router: Router) {
+  constructor(public bookService : BookService, private route: ActivatedRoute) {
   }
 
   bookForm = new FormGroup(

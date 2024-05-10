@@ -65,7 +65,7 @@ export class BookListComponent implements OnInit{
   initialSelection = [];
   allowMultiSelect = true;
   selection = new SelectionModel<Book>(this.allowMultiSelect, this.initialSelection);
-  displayedColumns: string[] = ['select', 'id', 'title', 'author', 'quantity', 'price', 'actions'];
+  displayedColumns: string[] = ['select', 'id', 'title', 'author', 'publisher', 'edition', 'releaseYear', 'description', 'quantity', 'price', 'actions'];
   dataSource: MatTableDataSource<Book> = new MatTableDataSource<Book>();
   book!: Book;
 
@@ -126,4 +126,3 @@ confirmDelete( book: Book) {
 
 //TODO: fix paginator
 //TODO: fix de refresh
-//TODO: fix the advices
