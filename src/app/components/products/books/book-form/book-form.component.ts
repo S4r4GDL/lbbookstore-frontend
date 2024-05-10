@@ -13,6 +13,8 @@ import {MatDivider} from "@angular/material/divider";
 import {MatButton} from "@angular/material/button";
 import {MatTooltip} from "@angular/material/tooltip";
 import {NgIf} from "@angular/common";
+import {MatDialog} from "@angular/material/dialog";
+import {DialogsSaveComponent} from "../../../dialogs/save/dialogs.save.component";
 
 @Component({
   selector: 'app-book-form',
@@ -46,7 +48,8 @@ export class BookFormComponent implements OnInit  {
   private book : Book = new Book();
   private id !: number;
 
-  constructor(public bookService : BookService, private route: ActivatedRoute) {
+
+  constructor(public bookService : BookService, private route: ActivatedRoute, private router: Router, public dialog: MatDialog,) {
   }
 
   bookForm = new FormGroup(
@@ -100,10 +103,17 @@ export class BookFormComponent implements OnInit  {
   onSubmit() {
     this.book = Object.assign(this.book, this.bookForm.value);
       this.bookService.save(this.book).subscribe(next=>{
+
+        this.dialog.open(DialogsSaveComponent,
+          {
+            width: '250px'
+          }).afterClosed().subscribe(value => {
+          this.bookForm.reset();
+          });
+
         console.log("Saved:", JSON.stringify(next));
       }, error=>{
         console.log("Error" + JSON.stringify(error));
-        alert('Error while trying to save');
       });
       console.log("Response:", this.bookForm.value);
       console.log("Book:", this.book);
