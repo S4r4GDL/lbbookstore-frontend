@@ -60,7 +60,7 @@ import {MatSort} from "@angular/material/sort";
   styleUrl: './book-list.component.scss'
 })
 
-export class BookListComponent implements OnInit{
+export class BookListComponent{
 
   initialSelection = [];
   allowMultiSelect = true;
@@ -72,9 +72,6 @@ export class BookListComponent implements OnInit{
   constructor(public bookService : BookService, route: ActivatedRoute, public dialog: MatDialog) {
     this.dataSource.data = route.snapshot.data['bookData'];
 
-  }
-
-  ngOnInit(): void {
   }
 
   refreshData(): void{
