@@ -5,7 +5,6 @@
         <h1>Books</h1>
       </div>
       <br>
-
     <div>
     <button mat-flat-button color="primary" class = "crud-button-add" mat-raised-button
             matTooltip="Add a new book" [routerLink]="['/new']">
@@ -14,8 +13,10 @@
   </div>
     <mat-divider></mat-divider>
 
+
     @if (dataSource.data.length > 0){
-      <table mat-table [dataSource]="dataSource" #table>
+      <div>
+      <table mat-table [dataSource]="dataSource" >
 
         <ng-container matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef>
@@ -89,6 +90,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
+      </div>
     }
     @else {
       <div class="no-data-card">
