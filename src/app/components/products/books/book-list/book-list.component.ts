@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {BookService} from "../shared/book.service";
 import {Book} from "../shared/book";
 import {NgForOf, NgIf} from "@angular/common";
@@ -22,6 +22,9 @@ import {MatCheckbox} from "@angular/material/checkbox";
 import {SelectionModel} from "@angular/cdk/collections";
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
+import {DialogsComponent} from "../../../dialogs/dialogs.component";
+import {MatDialog} from "@angular/material/dialog";
+import {MatSort} from "@angular/material/sort";
 
 @Component({
   selector: 'app-book-list',
@@ -66,20 +69,19 @@ export class BookListComponent implements OnInit{
   dataSource: MatTableDataSource<Book> = new MatTableDataSource<Book>();
   book!: Book;
 
-  constructor(public bookService : BookService, route: ActivatedRoute) {
-    this.refreshData();
+  constructor(public bookService : BookService, route: ActivatedRoute, public dialog: MatDialog, private changeDetectorRefs: ChangeDetectorRef) {
+    this.refresh();
   }
 
   ngOnInit(): void {
-
+    this.refresh();
   }
 
-  refreshData(): void{
+  refresh(): void{
     this.bookService.getAll().subscribe(value => {
-      console.log("refreshData book-list component value",value);
       this.dataSource.data = value;
-      console.log("refreshData data source book-list component");
     });
+    console.log("refreshData data source book-list component");
   }
 
   isAllSelected() {
@@ -93,26 +95,32 @@ export class BookListComponent implements OnInit{
       this.selection.clear() :
       this.dataSource.data.forEach(row => this.selection.select(row));
   }
+  @ViewChild(MatTable) table!: MatTable<any>;
+
+   delete(book: Book) {
+      console.log("Book To delete", JSON.stringify(book));
+      this.bookService.delete(book.id).subscribe(value => {
+        console.log("Deleted:", JSON.stringify(value));
+      }, error => {
+        console.log("Error" + JSON.stringify(error));
+        alert('Error while trying to delete');
+      });
+  }
 
 
-  delete(book: Book) {
-    console.log("Book To delete", JSON.stringify(book));
-    this.bookService.delete(book.id).subscribe(value=>{
-
-      console.log("Deleted:", JSON.stringify(value));
-    }, error=>{
-      console.log("Error" + JSON.stringify(error));
-      alert('Error while trying to delete');
+confirmDelete( book: Book) {
+  this.dialog.open(DialogsComponent,
+    {
+      width: '250px',
+    }).afterClosed().subscribe(result => {
+    console.log('The dialog was closed', result);
+    if(result) {
+      this.delete(book);
+    }
+    console.log('The dialog was closed', result);
     });
-
-  }
-
-  //Paginator conf
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
+  this.refresh();
+}
 
 }
 
