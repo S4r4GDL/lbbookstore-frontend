@@ -40,7 +40,7 @@ export class BookService {
 
   delete(id: number):Observable<Book>{
    let response = this.http.delete<Book>(`http://localhost:8080/api/v1/books/${id}`);
-    console.log("Creating a new book:"+JSON.stringify(response));
+    console.log("Deleting a book:"+JSON.stringify(response));
    return response;
 
   }

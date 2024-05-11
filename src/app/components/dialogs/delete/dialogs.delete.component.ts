@@ -21,6 +21,7 @@ import {MatButton} from "@angular/material/button";
   templateUrl: './dialogs.delete.component.html',
   styleUrl: './dialogs.delete.component.scss'
 })
+
 export class DialogsDeleteComponent {
   constructor(public dialogRef: MatDialogRef<DialogsDeleteComponent>) {
   }

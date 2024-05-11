@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {BookService} from "../shared/book.service";
 import {Book} from "../shared/book";
 import {NgForOf, NgIf} from "@angular/common";
@@ -23,7 +23,8 @@ import {SelectionModel} from "@angular/cdk/collections";
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
 import {DialogsDeleteComponent} from "../../../dialogs/delete/dialogs.delete.component";
-import {MatDialog} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
+import {DialogsErrorComponent} from "../../../dialogs/error/dialogs.error.component";
 
 @Component({
   selector: 'app-book-list',
@@ -101,9 +102,10 @@ export class BookListComponent{
 
       }, error => {
 
-        console.log("Error" + JSON.stringify(error));
-        alert('Error while trying to delete');
-
+        this.dialog.open(DialogsErrorComponent,
+          {
+            data: {error: error.error.toString()}
+          });
       });
   }
 
@@ -113,16 +115,14 @@ confirmDelete( book: Book) {
   this.dialog.open(DialogsDeleteComponent,
     {
       width: '250px',
+
     }).afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
+
       if(result) {
         this.delete(book);
       }
-      console.log('The dialog was closed', result);
+
     });
-
-
-
-}
+  }
 
 }

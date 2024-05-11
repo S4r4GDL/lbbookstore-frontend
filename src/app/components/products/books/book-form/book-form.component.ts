@@ -15,6 +15,7 @@ import {MatTooltip} from "@angular/material/tooltip";
 import {NgIf} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogsSaveComponent} from "../../../dialogs/save/dialogs.save.component";
+import {DialogsErrorComponent} from "../../../dialogs/error/dialogs.error.component";
 
 @Component({
   selector: 'app-book-form',
@@ -95,7 +96,14 @@ export class BookFormComponent implements OnInit  {
             releaseYear: this.book.releaseYear,
             title :this.book.title});
           console.log("Book to update:", JSON.stringify(this.book));
-        });
+        }, error => {
+
+        this.dialog.open(DialogsErrorComponent,
+          {
+            data: {error: error.error.toString()}
+          });
+
+      });
 
     }
 
@@ -103,17 +111,21 @@ export class BookFormComponent implements OnInit  {
   onSubmit() {
     this.book = Object.assign(this.book, this.bookForm.value);
       this.bookService.save(this.book).subscribe(next=>{
+        if(!this.id){
+          this.dialog.open(DialogsSaveComponent,
+            {
+              width: '250px'
+            }).afterClosed().subscribe(value => {
+            this.bookForm.reset();
+          });
+        }
+      }, error=>{
 
-        this.dialog.open(DialogsSaveComponent,
+        this.dialog.open(DialogsErrorComponent,
           {
-            width: '250px'
-          }).afterClosed().subscribe(value => {
-          this.bookForm.reset();
+            data: {error: error.error.toString()}
           });
 
-        console.log("Saved:", JSON.stringify(next));
-      }, error=>{
-        console.log("Error" + JSON.stringify(error));
       });
       console.log("Response:", this.bookForm.value);
       console.log("Book:", this.book);
