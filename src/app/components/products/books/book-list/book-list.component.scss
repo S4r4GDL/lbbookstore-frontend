@@ -21,11 +21,13 @@ table {
   overflow: initial;
 }
 
-.crud-button-add{
+.crud-button{
   display: flex;
   float: right;
-  margin-right: 10px;
-  margin-top: 10px;
-  margin-left: 10px;
+  margin: 10px 10px 40px;
+}
+
+.title-and-general-actions{
+  margin-bottom: 30px;
 }
 

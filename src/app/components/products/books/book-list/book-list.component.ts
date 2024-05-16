@@ -65,7 +65,7 @@ export class BookListComponent{
   initialSelection = [];
   allowMultiSelect = true;
   selection = new SelectionModel<Book>(this.allowMultiSelect, this.initialSelection);
-  displayedColumns: string[] = ['select', 'id', 'title', 'author', 'publisher', 'edition', 'releaseYear', 'description', 'quantity', 'price', 'actions'];
+  displayedColumns: string[] = ['select', 'id', 'title', 'author', 'publisher', 'edition', 'releaseYear', 'description', 'quantity', 'price', 'lastUpdate','actions'];
   dataSource: MatTableDataSource<Book> = new MatTableDataSource<Book>();
   book!: Book;
 
@@ -89,10 +89,22 @@ export class BookListComponent{
   toggleAllRows() {
     this.isAllSelected() ?
       this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
+      this.dataSource.data.forEach(row => {
+          this.selection.select(row);
+        }
+      );
   }
 
+
+
+
+
+
+
+
+//delete item by its row
    delete(book: Book) {
+
       console.log("Book To delete", JSON.stringify(book));
 
       this.bookService.delete(book.id).subscribe(value => {
@@ -111,7 +123,6 @@ export class BookListComponent{
 
 
 confirmDelete( book: Book) {
-
   this.dialog.open(DialogsDeleteComponent,
     {
       width: '250px',
@@ -125,4 +136,40 @@ confirmDelete( book: Book) {
     });
   }
 
+
+
+
+  //delete more than one item
+
+
+  confirmDeleteItems() {
+    this.dialog.open(DialogsDeleteComponent,
+      {
+        width: '250px',
+
+      }).afterClosed().subscribe(result => {
+
+      if(result) {
+        this.deleteItems(this.selection.selected);
+      }
+
+    });
+  }
+
+  private deleteItems(books: Book[]) {
+
+    this.bookService.deleteItems(books).subscribe(value => {
+
+      console.log("Deleted:", JSON.stringify(value));
+      this.refreshData();
+
+    }, error => {
+
+      this.dialog.open(DialogsErrorComponent,
+        {
+          data: {error: error.error.toString()}
+        });
+    });
+
+  }
 }

@@ -14,8 +14,8 @@ import {MatButton} from "@angular/material/button";
 import {MatTooltip} from "@angular/material/tooltip";
 import {NgIf} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
-import {DialogsSaveComponent} from "../../../dialogs/save/dialogs.save.component";
 import {DialogsErrorComponent} from "../../../dialogs/error/dialogs.error.component";
+import {BasicDialogComponent} from "../../../dialogs/basic/basic.dialog.component";
 
 @Component({
   selector: 'app-book-form',
@@ -50,7 +50,10 @@ export class BookFormComponent implements OnInit  {
   private id !: number;
 
 
-  constructor(public bookService : BookService, private route: ActivatedRoute, private router: Router, public dialog: MatDialog,) {
+  constructor(public bookService : BookService,
+              private route: ActivatedRoute,
+              private router: Router,
+              public dialog: MatDialog,) {
   }
 
   bookForm = new FormGroup(
@@ -111,13 +114,12 @@ export class BookFormComponent implements OnInit  {
   onSubmit() {
     this.book = Object.assign(this.book, this.bookForm.value);
       this.bookService.save(this.book).subscribe(next=>{
+
         if(!this.id){
-          this.dialog.open(DialogsSaveComponent,
-            {
-              width: '250px'
-            }).afterClosed().subscribe(value => {
-            this.bookForm.reset();
-          });
+          this.openSaveDialog();
+        }
+        else{
+          this.openUpdateDialog();
         }
       }, error=>{
 
@@ -131,5 +133,23 @@ export class BookFormComponent implements OnInit  {
       console.log("Book:", this.book);
 
 
+  }
+
+  private openSaveDialog() {
+    this.dialog.open(BasicDialogComponent,
+      {
+        width: '250px',
+        data:{title:'Saved', content:'Add more items?', route:'books', redirectOption: 'No', options: ['Keep adding']}
+      }).afterClosed().subscribe(value => {
+      this.bookForm.reset();
+    });
+  }
+
+  private openUpdateDialog() {
+    this.dialog.open(BasicDialogComponent,
+      {
+        width: '250px',
+        data:{title:'Update', content:'Save changes?', route:'books', redirectOption: 'Ok', options: ['No']}
+      });
   }
 }
