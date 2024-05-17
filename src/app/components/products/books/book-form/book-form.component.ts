@@ -12,10 +12,15 @@ import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {MatDivider} from "@angular/material/divider";
 import {MatButton} from "@angular/material/button";
 import {MatTooltip} from "@angular/material/tooltip";
-import {NgIf} from "@angular/common";
+import {AsyncPipe, NgIf} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
-import {DialogsErrorComponent} from "../../../dialogs/error/dialogs.error.component";
-import {BasicDialogComponent} from "../../../dialogs/basic/basic.dialog.component";
+import {DialogsErrorComponent} from "../../../basic/dialogs/error/dialogs.error.component";
+import {BasicDialogComponent} from "../../../basic/dialogs/basic-dialog/basic.dialog.component";
+import {
+  SelectBasicWithDisableComponent
+} from "../../../basic/select-basic-with-disable/select-basic-with-disable.component";
+import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocomplete";
+import {map, Observable, startWith} from "rxjs";
 
 @Component({
   selector: 'app-book-form',
@@ -37,7 +42,11 @@ import {BasicDialogComponent} from "../../../dialogs/basic/basic.dialog.componen
     MatTooltip,
     RouterLink,
     NgIf,
-    MatOption
+    MatOption,
+    SelectBasicWithDisableComponent,
+    MatAutocomplete,
+    MatAutocompleteTrigger,
+    AsyncPipe
   ],
   templateUrl: './book-form.component.html',
   styleUrl: './book-form.component.scss'
@@ -48,7 +57,7 @@ export class BookFormComponent implements OnInit  {
   protected titlePage: string = "New book";
   private book : Book = new Book();
   private id !: number;
-
+  protected publishers !: String[];
 
   constructor(public bookService : BookService,
               private route: ActivatedRoute,
@@ -76,13 +85,36 @@ export class BookFormComponent implements OnInit  {
       Validators.required,
       Validators.min(0),
     ]),
-    description: new FormControl("",[Validators.required])
+    description: new FormControl()
   });
 
 
+  filteredPublishers?: Observable<String[]>;
+
+  private filterPublishers(value: String): String[] {
+    const filterValue = value.toLowerCase();
+
+    return this.publishers.filter(publisher => publisher.toLowerCase().includes(filterValue));
+  }
+
+
   ngOnInit(){
+
+
+
+    this.bookService.getAllPublishers().subscribe(value=>{
+      this.publishers = value;
+
+      this.filteredPublishers = this.bookForm.controls.publisher.valueChanges.pipe(
+        startWith(''),
+        map(value => this.filterPublishers(value || '')),
+      );
+
+    });
+
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     console.log("IDto update :"+this.id+":");
+
 
     if(this.id){
       this.titlePage = "Update book";

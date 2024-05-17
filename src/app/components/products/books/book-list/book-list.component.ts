@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component} from '@angular/core';
 import {BookService} from "../shared/book.service";
 import {Book} from "../shared/book";
 import {NgForOf, NgIf} from "@angular/common";
@@ -22,9 +22,9 @@ import {MatCheckbox} from "@angular/material/checkbox";
 import {SelectionModel} from "@angular/cdk/collections";
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
-import {DialogsDeleteComponent} from "../../../dialogs/delete/dialogs.delete.component";
-import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
-import {DialogsErrorComponent} from "../../../dialogs/error/dialogs.error.component";
+import {MatDialog} from "@angular/material/dialog";
+import {DialogsDeleteComponent} from "../../../basic/dialogs/delete/dialogs.delete.component";
+import {DialogsErrorComponent} from "../../../basic/dialogs/error/dialogs.error.component";
 
 @Component({
   selector: 'app-book-list',

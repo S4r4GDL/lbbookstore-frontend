@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Book} from "./book";
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -56,4 +56,11 @@ export class BookService {
 
   }
 
+  getAllPublishers():Observable<String[]>{
+
+    let response = this.http.get<String[]>('http://localhost:8080/api/v1/books/search/all-publishers');
+    console.log("Publishers get ALL:"+ JSON.stringify(response));
+    return response;
+
+  }
 }
