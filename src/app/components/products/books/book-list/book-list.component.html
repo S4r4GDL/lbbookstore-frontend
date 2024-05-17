@@ -1,25 +1,35 @@
-<section>
+<section >
   <div class="mat-elevation-z8">
-
       <div class="table-title">
         <h1>Books</h1>
       </div>
-      <br>
-    <div>
-    <button mat-flat-button color="primary" class = "crud-button-add" mat-raised-button
+    <br>
+
+    <div class="crud-button-general">
+
+    @if(dataSource.data.length > 0){
+      <button mat-flat-button color="warn" class = "crud-button" mat-raised-button
+              matTooltip="Delete more tha one book" (click)="confirmDeleteItems()">
+        delete
+      </button>
+    }
+
+    <button mat-flat-button color="primary" class = "crud-button" mat-raised-button
             matTooltip="Add a new book" [routerLink]="['/new']">
       Add new
     </button>
+      <mat-divider ></mat-divider>
   </div>
-    <mat-divider></mat-divider>
+    <br>
 
 
     @if (dataSource.data.length > 0){
+
       <div>
       <table mat-table [dataSource]="dataSource" >
 
-        <ng-container matColumnDef="select">
-          <th mat-header-cell *matHeaderCellDef>
+      <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef >
             <mat-checkbox [color]="" (change)="$event ? toggleAllRows() : null"
                           [checked]="selection.hasValue() && isAllSelected()"
                           [indeterminate]="selection.hasValue() && !isAllSelected()">
@@ -33,10 +43,9 @@
           </td>
         </ng-container>
 
-
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef> ID </th>
-          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          <td mat-cell *matCellDef="let element" > {{element.id}} </td>
         </ng-container>
 
         <ng-container matColumnDef="title">
@@ -79,6 +88,16 @@
           <td mat-cell *matCellDef="let element"> {{element.price}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="lastUpdate">
+          <th mat-header-cell *matHeaderCellDef> Last update </th>
+          <td mat-cell *matCellDef="let element"> {{element.lastUpdate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="active">
+          <th mat-header-cell *matHeaderCellDef> Status </th>
+          <td mat-cell *matCellDef="let element" [ngClass]="{'inactive-item': !element.active}">{{element.active? 'active':'inactive'}}</td>
+        </ng-container>
+
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef> Actions </th>
           <td mat-cell *matCellDef="let element"> <div>
@@ -88,18 +107,17 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
       </table>
       </div>
-    }
-    @else {
-      <div class="no-data-card">
-        <mat-card>
-          <mat-card-content>Sorry, there's no books</mat-card-content>
-        </mat-card>
-      </div>
 
+    }@else {
+      <div class="no-data">
+        <h5>Sorry, there's no books</h5>
+      </div>
+      <br>
     }
+
   </div>
 </section>
 

@@ -5,7 +5,7 @@
       </div>
       <br>
       <mat-divider></mat-divider>
-      <mat-form-field class="book-form-field-input">
+      <mat-form-field class="form-field-input">
         <mat-label>Title</mat-label>
         <input formControlName="title" name="title" matInput #inputTitle maxlength="240" placeholder="Ex. 100 anos..." >
         <mat-hint>{{inputTitle.value.length}}/240</mat-hint>
@@ -14,7 +14,7 @@
         }
       </mat-form-field>
 
-      <mat-form-field class="book-form-field-input">
+      <mat-form-field class="form-field-input">
         <mat-label>Author</mat-label>
         <input formControlName="author" name="author" matInput #inputAuthor maxlength="150" placeholder="Ex. Gabriel Garcia...">
         <mat-hint>{{inputAuthor.value.length}}/150</mat-hint>
@@ -23,7 +23,7 @@
         }
       </mat-form-field>
 
-      <mat-form-field class="book-form-field-input">
+      <mat-form-field class="form-field-input">
         <mat-label>Edition</mat-label>
         <input formControlName="edition" name="edition" matInput #inputEdition maxlength="150" placeholder="Ex. Pocket edtion n150">
         <mat-hint>{{inputEdition.value.length}}/150</mat-hint>
@@ -32,17 +32,20 @@
         }
       </mat-form-field>
 
-      <mat-form-field class="book-form-field-input">
-        <mat-label>Publisher</mat-label>
-        <input formControlName="publisher" name="publisher" matInput #inputPublisher maxlength="150" placeholder="Ex. Intrincica, Darkside books...">
-        <mat-hint>{{inputPublisher.value.length}}/150</mat-hint>
-        @if (inputPublisher.value.length == 0) {
-          <mat-error>Mandatory field</mat-error>
-        }
-      </mat-form-field>
+        <mat-form-field class="form-field-input" >
+            <mat-label>Publisher</mat-label>
+            <input
+          placeholder="Pick one"
+          aria-label="Publisher"
+          matInput type="text" [formControl]="bookForm.controls.publisher" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              @for (option of filteredPublishers | async; track option) {
+                <mat-option [value]="option">{{option}}</mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
 
-
-      <mat-form-field class="book-form-field-input">
+      <mat-form-field class="form-field-input">
         <mat-label>Year of release</mat-label>
         <input formControlName="releaseYear" name="releaseYear" matInput type="number" id="releaseYear" #inputYear class="example-right-align" placeholder="1992">
         @if (!inputYear.checkValidity()) {
@@ -50,7 +53,7 @@
         }
       </mat-form-field>
 
-      <mat-form-field class="book-form-field-input">
+      <mat-form-field class="form-field-input">
         <mat-label>Price</mat-label>
         <input formControlName="price" name="price"  matInput type="number" class="example-right-align" #inputPrice placeholder="$&nbsp; 00.00">
         @if (inputPrice.valueAsNumber <= 0) {
@@ -58,7 +61,7 @@
         }
       </mat-form-field>
 
-      <mat-form-field class="book-form-field-input">
+      <mat-form-field class="form-field-input">
         <mat-label>Quantity</mat-label>
         <input formControlName="quantity" name="quantity" matInput type="number" id="quantity"  #inputQuantity class="example-right-align" placeholder="0">
         @if (inputQuantity.valueAsNumber < 0) {
@@ -66,7 +69,7 @@
         }
       </mat-form-field>
 
-      <mat-form-field class="book-form-field-input" >
+      <mat-form-field class="form-field-input" >
         <mat-label>Status</mat-label>
         <mat-select placeholder="Item is active" formControlName="active" id="active">
           <mat-option value="true">Item is active</mat-option>
@@ -87,7 +90,7 @@
       </button>
 
       <button mat-flat-button mat-raised-button color="primary" class="bt-cancel-bottom"
-              matTooltip="Cancel"  type="button" [routerLink]="['/books']">
+              matTooltip="Cancel"  type="button" (click)="openCancelDialog()">
         Cancel
       </button>
 

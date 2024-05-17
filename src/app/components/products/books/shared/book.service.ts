@@ -28,6 +28,7 @@ export class BookService {
 
   save(book: Book):Observable<Book>{
     let response: Observable<Book>;
+
     if(book.id) {
       console.log("Updating data:"+JSON.stringify(book))
       response = this.http.put<Book>(`http://localhost:8080/api/v1/books/${book.id}`, book);
@@ -35,14 +36,31 @@ export class BookService {
       console.log("Creating a new book:"+JSON.stringify(book))
       response = this.http.post<Book>('http://localhost:8080/api/v1/books', book);
     }
+
     return response;
   }
 
   delete(id: number):Observable<Book>{
    let response = this.http.delete<Book>(`http://localhost:8080/api/v1/books/${id}`);
-    console.log("Deleting a book:"+JSON.stringify(response));
+    console.log("Deleting a book by id:" + JSON.stringify(response));
    return response;
 
   }
 
+  deleteItems(books: Book[]):Observable<Book[]>{
+
+    console.log("Deleting a list of books:"+JSON.stringify(books));
+    let response = this.http.delete<Book[]>(`http://localhost:8080/api/v1/books`, {body: books});
+    console.log("Deleting a list of books:"+JSON.stringify(response));
+    return response;
+
+  }
+
+  getAllPublishers():Observable<String[]>{
+
+    let response = this.http.get<String[]>('http://localhost:8080/api/v1/books/search/all-publishers');
+    console.log("Publishers get ALL:"+ JSON.stringify(response));
+    return response;
+
+  }
 }

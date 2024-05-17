@@ -24,8 +24,10 @@ export class BookResolve implements Resolve<Book[]> {
             observer.complete();
           },
           error: error => {
+            console.log("Resolve");
+            observer.next(undefined);
             observer.error(error);
-            this.router.navigate(['books']);
+
           }
         });
     });

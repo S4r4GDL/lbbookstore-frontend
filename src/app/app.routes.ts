@@ -18,3 +18,9 @@ export const routes: Routes = [
     {path: 'new', component: BookFormComponent},
     {path: 'edit/:id', component: BookFormComponent}
 ];
+
+//TODO: ADD dialog to cancel an operation
+//TODO: Return to main page after save an update
+//TODO: ADD snackbar on update
+//TODO: FIX select releaseYear
+//TODO: ADD select publishers(maybe)

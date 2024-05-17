@@ -12,10 +12,15 @@ import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {MatDivider} from "@angular/material/divider";
 import {MatButton} from "@angular/material/button";
 import {MatTooltip} from "@angular/material/tooltip";
-import {NgIf} from "@angular/common";
+import {AsyncPipe, NgIf} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
-import {DialogsSaveComponent} from "../../../dialogs/save/dialogs.save.component";
-import {DialogsErrorComponent} from "../../../dialogs/error/dialogs.error.component";
+import {DialogsErrorComponent} from "../../../basic/dialogs/error/dialogs.error.component";
+import {BasicDialogComponent} from "../../../basic/dialogs/basic-dialog/basic.dialog.component";
+import {
+  SelectBasicWithDisableComponent
+} from "../../../basic/select-basic-with-disable/select-basic-with-disable.component";
+import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocomplete";
+import {map, Observable, startWith} from "rxjs";
 
 @Component({
   selector: 'app-book-form',
@@ -37,7 +42,11 @@ import {DialogsErrorComponent} from "../../../dialogs/error/dialogs.error.compon
     MatTooltip,
     RouterLink,
     NgIf,
-    MatOption
+    MatOption,
+    SelectBasicWithDisableComponent,
+    MatAutocomplete,
+    MatAutocompleteTrigger,
+    AsyncPipe
   ],
   templateUrl: './book-form.component.html',
   styleUrl: './book-form.component.scss'
@@ -48,9 +57,12 @@ export class BookFormComponent implements OnInit  {
   protected titlePage: string = "New book";
   private book : Book = new Book();
   private id !: number;
+  protected publishers !: String[];
 
-
-  constructor(public bookService : BookService, private route: ActivatedRoute, private router: Router, public dialog: MatDialog,) {
+  constructor(public bookService : BookService,
+              private route: ActivatedRoute,
+              private router: Router,
+              public dialog: MatDialog,) {
   }
 
   bookForm = new FormGroup(
@@ -73,13 +85,36 @@ export class BookFormComponent implements OnInit  {
       Validators.required,
       Validators.min(0),
     ]),
-    description: new FormControl("",[Validators.required])
+    description: new FormControl()
   });
 
 
+  filteredPublishers?: Observable<String[]>;
+
+  private filterPublishers(value: String): String[] {
+    const filterValue = value.toLowerCase();
+
+    return this.publishers.filter(publisher => publisher.toLowerCase().includes(filterValue));
+  }
+
+
   ngOnInit(){
+
+
+
+    this.bookService.getAllPublishers().subscribe(value=>{
+      this.publishers = value;
+
+      this.filteredPublishers = this.bookForm.controls.publisher.valueChanges.pipe(
+        startWith(''),
+        map(value => this.filterPublishers(value || '')),
+      );
+
+    });
+
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     console.log("IDto update :"+this.id+":");
+
 
     if(this.id){
       this.titlePage = "Update book";
@@ -111,13 +146,12 @@ export class BookFormComponent implements OnInit  {
   onSubmit() {
     this.book = Object.assign(this.book, this.bookForm.value);
       this.bookService.save(this.book).subscribe(next=>{
+
         if(!this.id){
-          this.dialog.open(DialogsSaveComponent,
-            {
-              width: '250px'
-            }).afterClosed().subscribe(value => {
-            this.bookForm.reset();
-          });
+          this.openSaveDialog();
+        }
+        else{
+          this.openUpdateDialog();
         }
       }, error=>{
 
@@ -130,6 +164,35 @@ export class BookFormComponent implements OnInit  {
       console.log("Response:", this.bookForm.value);
       console.log("Book:", this.book);
 
+
+  }
+
+  private openSaveDialog() {
+    this.dialog.open(BasicDialogComponent,
+      {
+        width: '250px',
+        data:{title:'Saved', content:'Add more items?', route:'books', redirectOption: 'No', options: ['Keep adding']}
+      }).afterClosed().subscribe(value => {
+        if(value == 'Keep adding')
+          this.bookForm.reset();
+    });
+  }
+
+  private openUpdateDialog() {
+    this.dialog.open(BasicDialogComponent,
+      {
+        width: '250px',
+        data:{title:'Update', content:'Save changes?', route:'books', redirectOption: 'Ok', options: ['No']}
+      });
+  }
+
+  openCancelDialog() {
+
+    this.dialog.open(BasicDialogComponent,
+      {
+        width: '250px',
+        data:{title:'Cancel', content:'Cancel changes?', route:'books', redirectOption: 'Ok', options: ['No']}
+      });
 
   }
 }
