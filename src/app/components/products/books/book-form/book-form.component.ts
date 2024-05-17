@@ -173,7 +173,8 @@ export class BookFormComponent implements OnInit  {
         width: '250px',
         data:{title:'Saved', content:'Add more items?', route:'books', redirectOption: 'No', options: ['Keep adding']}
       }).afterClosed().subscribe(value => {
-      this.bookForm.reset();
+        if(value == 'Keep adding')
+          this.bookForm.reset();
     });
   }
 
@@ -183,5 +184,15 @@ export class BookFormComponent implements OnInit  {
         width: '250px',
         data:{title:'Update', content:'Save changes?', route:'books', redirectOption: 'Ok', options: ['No']}
       });
+  }
+
+  openCancelDialog() {
+
+    this.dialog.open(BasicDialogComponent,
+      {
+        width: '250px',
+        data:{title:'Cancel', content:'Cancel changes?', route:'books', redirectOption: 'Ok', options: ['No']}
+      });
+
   }
 }

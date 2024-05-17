@@ -90,7 +90,7 @@
       </button>
 
       <button mat-flat-button mat-raised-button color="primary" class="bt-cancel-bottom"
-              matTooltip="Cancel"  type="button" [routerLink]="['/books']">
+              matTooltip="Cancel"  type="button" (click)="openCancelDialog()">
         Cancel
       </button>
 

@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {BookService} from "../shared/book.service";
 import {Book} from "../shared/book";
-import {NgForOf, NgIf} from "@angular/common";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {
   MatCell,
   MatCellDef,
@@ -54,7 +54,8 @@ import {DialogsErrorComponent} from "../../../basic/dialogs/error/dialogs.error.
     MatCheckbox,
     MatCard,
     MatCardContent,
-    MatIcon
+    MatIcon,
+    NgClass
   ],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.scss'
@@ -65,18 +66,28 @@ export class BookListComponent{
   initialSelection = [];
   allowMultiSelect = true;
   selection = new SelectionModel<Book>(this.allowMultiSelect, this.initialSelection);
-  displayedColumns: string[] = ['select', 'id', 'title', 'author', 'publisher', 'edition', 'releaseYear', 'description', 'quantity', 'price', 'lastUpdate','actions'];
+  displayedColumns: string[] = ['select', 'id', 'title', 'author', 'publisher', 'edition', 'releaseYear', 'description', 'quantity', 'price', 'lastUpdate', 'active','actions'];
   dataSource: MatTableDataSource<Book> = new MatTableDataSource<Book>();
   book!: Book;
 
-  constructor(public bookService : BookService, route: ActivatedRoute, public dialog: MatDialog) {
+  constructor(public bookService : BookService, public route: ActivatedRoute, public dialog: MatDialog) {
     this.dataSource.data = route.snapshot.data['bookData'];
 
   }
 
   refreshData(): void{
     this.bookService.getAll().subscribe((data: Book[]) => {
-      this.dataSource.data = data;
+      if(data)
+        this.dataSource.data = data;
+
+    },error => {
+      this.dataSource.data = [];
+      this.dialog.open(DialogsErrorComponent,
+        {
+          data: {error: error.error.toString()
+          }
+        });
+
     });
   }
 
@@ -89,8 +100,12 @@ export class BookListComponent{
   toggleAllRows() {
     this.isAllSelected() ?
       this.selection.clear() :
-      this.dataSource.data.forEach(row => {
-          this.selection.select(row);
+      this.dataSource.data.forEach(book => {
+          this.selection.select(book);
+
+        console.log("this.selection.selected: {}", this.selection.selected )
+
+
         }
       );
   }
@@ -150,7 +165,9 @@ confirmDelete( book: Book) {
       }).afterClosed().subscribe(result => {
 
       if(result) {
+        console.log("this.selection.selected: {}", this.selection.selected );
         this.deleteItems(this.selection.selected);
+
       }
 
     });

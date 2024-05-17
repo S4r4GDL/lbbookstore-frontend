@@ -1,6 +1,7 @@
 table {
   width: 100%;
   margin-bottom: 50px;
+  padding-bottom: 20px;
 }
 
 .mat-form-field{
@@ -31,3 +32,10 @@ table {
   margin-bottom: 30px;
 }
 
+.inactive-item{
+  background: rgb(225, 102, 102);
+}
+
+.no-data{
+  padding-left: 20px;
+}
