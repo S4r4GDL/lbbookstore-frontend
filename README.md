@@ -1,4 +1,62 @@
-# LbbookstoreFrontend
+# Lbbookstore-Frontend (en-us)
+
+### Sara Gonçalves de Lima
+
+This is my first project for the Web Programming 1 course!
+
+**Chosen Entity:** Book
+
+**Main Technologies:**
+
+-  Angular version 17.3.4.
+-  Angular Materials
+-  Html 5
+-  Typescript
+
+**Essential Features:**
+
+-   Book Management: CRUD operations + delete more than one model each time
+  
+**Additional Notes: 
+ -  IDE: IntelliJ IDEA 2023.2
+
+-   Project version: 0.0.1-SNAPSHOT (developing)
+
+
+# LBbookstore (pt-br)
+
+### Sara Gonçalves de Lima
+
+Este é o meu primeiro projeto para a disciplina de Programação Web 1! 
+
+**Entidade escolhida:** livro(Book)
+
+**Principais tecnologias:**
+
+-  Angular version 17.3.4.
+-  Angular Materials
+-  Html 5
+-  Typescript
+
+**Principais funcionalidades:**
+
+-   Manter livro: CRUD + deletar mais de um livro ao mesmo tempo
+  
+**Notas adicionais: 
+  -  IDE: IntelliJ IDEA 2023.2
+
+-   Versão do projeto: 0.0.1-SNAPSHOT (em desenvolvimento)
+
+
+
+
+
+
+
+
+
+#Framework orientations:
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.4.
 
