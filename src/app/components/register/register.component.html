@@ -18,9 +18,9 @@
             <div>
               <mat-form-field class="form-field-input">
                 <mat-label>E-mail</mat-label>
-                <input formControlName="userName" name="userName" matInput #inputEmail type="email" maxlength="240"
+                <input formControlName="username" name="userName" matInput #inputUsername type="email" maxlength="240"
                        placeholder="example@gmail.com">
-                @if (registerForm.controls.userName.invalid) {
+                @if (registerForm.controls.username.invalid) {
                   <mat-error>E-mail is invalid</mat-error>
                 }
               </mat-form-field>

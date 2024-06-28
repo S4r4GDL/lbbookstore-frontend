@@ -7,12 +7,12 @@
           <span>Books</span>
         </button>
 
-        <button mat-button class="nav-button" [routerLink]="currentUser === 'USER' ? '/cart' : '/login'">
+        <button mat-button class="nav-button" [routerLink]="currentUser === 'ROLE_USER' ? '/cart' : '/login'">
           <mat-icon>shopping_cart</mat-icon>
           <span>My Cart</span>
         </button>
 
-        <button mat-button class="nav-button" [routerLink]="currentUser === 'USER' || currentUser === 'ADMIN' ? '/account' : '/login'">
+        <button mat-button class="nav-button" [routerLink]="currentUser === 'ROLE_USER' || currentUser === 'ROLE_ADMIN' ? '/account' : '/login'">
           <mat-icon>account_circle</mat-icon>
           <span>Account</span>
         </button>

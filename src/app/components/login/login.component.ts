@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {MatDialogActions, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
+import {MatDialog, MatDialogActions, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
 import {MatButton} from "@angular/material/button";
 import {AsyncPipe, NgOptimizedImage} from "@angular/common";
 import {
@@ -25,6 +25,7 @@ import {
 } from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {User} from "./shared/user";
+import {DialogsErrorComponent} from "../basic/dialogs/error/dialogs.error.component";
 
 @Component({
   selector: 'app-login',
@@ -67,6 +68,7 @@ export class LoginComponent {
   user = new User();
   constructor(public loginService: LoginService,
               private route: ActivatedRoute,
+              public dialog: MatDialog,
               private router: Router, private formBuilder: FormBuilder) {
   }
 
@@ -86,7 +88,11 @@ export class LoginComponent {
           this.router.navigateByUrl('/account');
         },
         (error) => {
-          console.error('Erro ao fazer login:', error);
+          this.dialog.open(DialogsErrorComponent,
+            {
+              data: {error: error.error.toString()
+              }
+            });
         }
       );
     } else {

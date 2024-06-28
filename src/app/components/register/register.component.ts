@@ -17,6 +17,8 @@ import {MatInput} from "@angular/material/input";
 import {MatTooltip} from "@angular/material/tooltip";
 import {NgOptimizedImage} from "@angular/common";
 import {MatNativeDateModule} from "@angular/material/core";
+import {DialogsErrorComponent} from "../basic/dialogs/error/dialogs.error.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-register',
@@ -51,6 +53,7 @@ export class RegisterComponent {
   user = new User();
   constructor(public loginService: LoginService,
               private route: ActivatedRoute,
+              public dialog: MatDialog,
               private router: Router, private formBuilder: FormBuilder) {
   }
 
@@ -58,7 +61,7 @@ export class RegisterComponent {
     name: new FormControl("", [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
     confirmPassword: new FormControl("", [Validators.required]),
     dataBirth: new FormControl( new Date(), [Validators.required]),
-    userName: new FormControl("", [Validators.required, Validators.email]),
+    username: new FormControl("", [Validators.required, Validators.email]),
     password: new FormControl("", [Validators.required]),
   }, { validators: CustomValidator });
 
@@ -77,7 +80,11 @@ export class RegisterComponent {
         this.router.navigateByUrl('/account');
       },
       (error) => {
-        console.error('Erro ao fazer login:', error);
+        this.dialog.open(DialogsErrorComponent,
+          {
+            data: {error: error.error.toString()
+            }
+          });
       }
     );
   } else {

@@ -1,4 +1,6 @@
-<section *ngIf="currentUserRole === 'ADMIN'">
+<ng-template #intrusor>You! Mind your own business</ng-template>
+<section *ngIf="currentUserRole === 'ROLE_ADMIN' else this.intrusor">
+
   <div class="form-container">
     <form class="mat-elevation-z8" [formGroup]="bookForm" (ngSubmit)="onSubmit()">
       <div class="table-title">

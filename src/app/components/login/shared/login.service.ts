@@ -6,6 +6,7 @@ import {BehaviorSubject, tap} from "rxjs";
 import {Router} from "@angular/router";
 import { jwtDecode } from 'jwt-decode';
 import {TokenDTO} from "./tokenDTO";
+import {MatDialog} from "@angular/material/dialog";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class LoginService {
 
   private apiUrl!: String;
 
-  constructor(http:HttpClient, private router:Router) {
+  constructor(http:HttpClient, private router:Router, public dialog: MatDialog,) {
     this.http = http;
     this.apiUrl = environment.apiUrl+"/auth";
   }
@@ -70,7 +71,7 @@ export class LoginService {
   }
 
 
-  getUserRole(){
+  getUserRole():string{
     if(this.isLoggedIn()){
       return this.getDecodedToken().scope.toString();
     }else{

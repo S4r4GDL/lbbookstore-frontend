@@ -103,7 +103,7 @@ export class BookFormComponent implements OnInit  {
 
   ngOnInit(){
 
-    if(!this.loginService.getUserRole().matches("ADMIN")){
+    if(!(this.loginService.getUserRole() === "ROLE_ADMIN")){
       this.dialog.open(BasicDialogComponent,
         {
           width: '250px',

@@ -17,14 +17,9 @@ export const routes: Routes = [
     {path:'mugs', component:MugListComponent},
     {path:'cart', component: CartListComponent},
     {path:'account', component: AccountComponent},
-    {path: 'new', component: BookFormComponent},
+    {path: 'new-book', component: BookFormComponent},
     {path: 'edit/:id', component: BookFormComponent},
     {path: 'register', component: RegisterComponent},
     {path:'login', component: LoginComponent}
 ];
 
-//TODO: ADD dialog to cancel an operation
-//TODO: Return to main page after save an update
-//TODO: ADD snackbar on update
-//TODO: FIX select releaseYear
-//TODO: ADD select publishers(maybe)

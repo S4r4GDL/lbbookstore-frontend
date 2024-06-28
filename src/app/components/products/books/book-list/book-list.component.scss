@@ -1,17 +1,13 @@
-table {
+.mat-card-table-content {
   width: 100%;
   margin-bottom: 50px;
   padding-bottom: 20px;
+  overflow-x: scroll;
 }
 
 .mat-form-field{
   font-size: 14px;
-  width: 80%;
-}
-
-.form-filter{
-  display: flex;
-  margin-left: 20px;
+  width: 100%;
 }
 
 .table-title{
@@ -43,4 +39,11 @@ table {
   padding-top: 25px;
   padding-bottom: 25px;
   margin-bottom: 30px;
+  width: 100%;
+  justify-self: center;
+  justify-content: center;
+}
+
+.crud-button-general{
+  margin-bottom:30px;
 }
