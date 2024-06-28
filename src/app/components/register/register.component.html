@@ -1,0 +1,93 @@
+<div class="session">
+  <section class="mat-elevation-z8">
+    <div class="form-container">
+      <div class="image">
+        <img priority ngSrc="assets/LB_login_page.png" alt="login" height="618" width="521">
+      </div>
+
+      <div class="form-group">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+          <div class="table-title">
+            <h1>Register</h1>
+          </div>
+          <mat-divider></mat-divider>
+
+          <div class="form-field-items">
+
+            <div>
+              <mat-form-field class="form-field-input">
+                <mat-label>E-mail</mat-label>
+                <input formControlName="userName" name="userName" matInput #inputEmail type="email" maxlength="240"
+                       placeholder="example@gmail.com">
+                @if (registerForm.controls.userName.invalid) {
+                  <mat-error>E-mail is invalid</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field class="form-field-input">
+                <mat-label>Password</mat-label>
+                <input formControlName="password" name="password" matInput #inputPassword type="password">
+                @if (registerForm.controls.password.invalid) {
+                  <mat-error>Password is invalid</mat-error>
+                }
+              </mat-form-field>
+            </div>
+              <div>
+
+                <mat-form-field class="form-field-input">
+                  <mat-label>Confirm password</mat-label>
+                  <input formControlName="confirmPassword" name="confirmPassword" matInput #inputConfirmPassword
+                         type="password">
+                  @if (registerForm.errors?.['PasswordNoMatch']) {
+                    <mat-error>Passwords doesn't match</mat-error>
+                  } @else if (registerForm.controls.confirmPassword.invalid){
+                    <mat-error>Mandatory field</mat-error>
+                  }
+                </mat-form-field>
+
+              </div>
+
+              <div>
+                <mat-form-field class="form-field-input">
+                  <mat-label>Name</mat-label>
+                  <input formControlName="name" name="name" matInput #inputName type="text" maxlength="240"
+                         placeholder="Your name">
+                  @if (registerForm.controls.name.invalid) {
+                    <mat-error>Name is invalid</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+
+              <div>
+                <mat-form-field class="form-field-input">
+                  <mat-label>Data of birth</mat-label>
+                  <input formControlName="dataBirth" name="dataBirth" matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate">
+
+                  <mat-hint>MM/DD/YYYY</mat-hint>
+                  <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+
+                  @if (registerForm.controls.dataBirth.invalid) {
+                    <mat-error>data is invalid</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+
+              <div  class="buttons">
+                <button mat-flat-button class="button-submit" mat-raised-button
+                        matTooltip="Login" type="submit">
+                  Create
+                </button>
+              </div>
+              <div>
+                <p class="foot-form">Already have an account? <a [routerLink]="['/login']">Login</a></p>
+              </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>

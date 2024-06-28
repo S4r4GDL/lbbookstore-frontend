@@ -1,6 +1,6 @@
 export class Book{
   id! : number;
-  title! : string;
+  name! : string;
   author! : string;
   edition! : string;
   releaseYear! : number;

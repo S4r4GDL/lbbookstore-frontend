@@ -21,6 +21,7 @@ import {
 } from "../../../basic/select-basic-with-disable/select-basic-with-disable.component";
 import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocomplete";
 import {map, Observable, startWith} from "rxjs";
+import {LoginService} from "../../../login/shared/login.service";
 
 @Component({
   selector: 'app-book-form',
@@ -58,16 +59,18 @@ export class BookFormComponent implements OnInit  {
   private book : Book = new Book();
   private id !: number;
   protected publishers !: String[];
-
+  public currentUserRole!: string;
   constructor(public bookService : BookService,
               private route: ActivatedRoute,
               private router: Router,
-              public dialog: MatDialog,) {
+              public dialog: MatDialog,
+              public loginService: LoginService) {
+    this.currentUserRole = this.loginService.getUserRole();
   }
 
   bookForm = new FormGroup(
     {
-    title: new FormControl("", [Validators.required]),
+    name: new FormControl("", [Validators.required]),
     author: new FormControl("", [Validators.required]),
     publisher: new FormControl("", [Validators.required]),
     edition: new FormControl("", [Validators.required]),
@@ -100,8 +103,14 @@ export class BookFormComponent implements OnInit  {
 
   ngOnInit(){
 
+    if(!this.loginService.getUserRole().matches("ADMIN")){
+      this.dialog.open(BasicDialogComponent,
+        {
+          width: '250px',
+          data:{title:'Error', content:'Not allowed', route:'books', redirectOption: 'Ok'}
+        });
 
-
+    }else{
     this.bookService.getAllPublishers().subscribe(value=>{
       this.publishers = value;
 
@@ -129,7 +138,7 @@ export class BookFormComponent implements OnInit  {
             publisher: this.book.publisher,
             quantity: this.book.quantity,
             releaseYear: this.book.releaseYear,
-            title :this.book.title});
+            name :this.book.name});
           console.log("Book to update:", JSON.stringify(this.book));
         }, error => {
 
@@ -142,6 +151,7 @@ export class BookFormComponent implements OnInit  {
 
     }
 
+  }
   }
   onSubmit() {
     this.book = Object.assign(this.book, this.bookForm.value);

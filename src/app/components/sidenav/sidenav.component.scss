@@ -1,0 +1,32 @@
+$sidenav-bg-color: #a098d5;
+
+mat-sidenav{
+  padding-top: 3.5rem;
+  background: $sidenav-bg-color;
+}
+mat-sidenav-container {
+  height:100%;
+  padding-top: 3.5rem;
+}
+.nav-button{
+  justify-content: flex-start;
+  vertical-align: middle;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+mat-icon {
+  margin-right: 0.25rem;
+  justify-self: flex-start;
+}
+.main-mat-card{
+  padding: 15px;
+  height: max-content;
+  align-content: space-around;
+
+}
+.main-mat-card-content{
+  margin: 15px;
+  height:100%;
+}

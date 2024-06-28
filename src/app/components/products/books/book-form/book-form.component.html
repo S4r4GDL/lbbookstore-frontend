@@ -1,13 +1,16 @@
-<section>
+<section *ngIf="currentUserRole === 'ADMIN'">
+  <div class="form-container">
     <form class="mat-elevation-z8" [formGroup]="bookForm" (ngSubmit)="onSubmit()">
       <div class="table-title">
         <h1>{{titlePage}}</h1>
       </div>
-      <br>
+
       <mat-divider></mat-divider>
+      <div class="form-field-items">
+
       <mat-form-field class="form-field-input">
         <mat-label>Title</mat-label>
-        <input formControlName="title" name="title" matInput #inputTitle maxlength="240" placeholder="Ex. 100 anos..." >
+        <input formControlName="name" name="name" matInput #inputTitle maxlength="240" placeholder="Ex. 100 anos..." >
         <mat-hint>{{inputTitle.value.length}}/240</mat-hint>
         @if (inputTitle.value.length == 0) {
           <mat-error>Mandatory field</mat-error>
@@ -77,13 +80,16 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-divider></mat-divider>
       <mat-form-field class="book-form-field-textarea">
         <mat-label>Description</mat-label>
         <textarea formControlName="description" name="description" id="description" matInput #inputDescription maxlength="400" ></textarea>
         <mat-hint>{{inputDescription.value.length}}/400</mat-hint>
       </mat-form-field>
+      </div>
 
+<mat-divider></mat-divider>
+
+      <div>
       <button mat-flat-button class = "crud-button-save" mat-raised-button
               matTooltip="Save the book data" type="submit">
         Save
@@ -93,6 +99,7 @@
               matTooltip="Cancel"  type="button" (click)="openCancelDialog()">
         Cancel
       </button>
-
+      </div>
     </form>
+  </div>
 </section>

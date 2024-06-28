@@ -1,8 +1,7 @@
-<div class="wrapper">
-  <app-header></app-header>
-<section>
-  <main class="container">
-    <router-outlet></router-outlet>
-  </main>
-</section>
-</div>
+<mat-toolbar >
+    <button mat-icon-button aria-label="Menu icon" (click)="sidenavComponent.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <a [routerLink]="['']"> <img src="assets/lblogo.png" alt=""></a>
+  </mat-toolbar>
+<app-sidenav #sidenavComponent class="sidenav"></app-sidenav>

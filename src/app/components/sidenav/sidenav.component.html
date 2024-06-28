@@ -1,0 +1,37 @@
+<mat-sidenav-container>
+  <mat-sidenav mode="side" [opened]="status">
+    <mat-nav-list>
+      <div class="items">
+        <button mat-button class="nav-button" [routerLink]="['/books']">
+          <mat-icon>book</mat-icon>
+          <span>Books</span>
+        </button>
+
+        <button mat-button class="nav-button" [routerLink]="currentUser === 'USER' ? '/cart' : '/login'">
+          <mat-icon>shopping_cart</mat-icon>
+          <span>My Cart</span>
+        </button>
+
+        <button mat-button class="nav-button" [routerLink]="currentUser === 'USER' || currentUser === 'ADMIN' ? '/account' : '/login'">
+          <mat-icon>account_circle</mat-icon>
+          <span>Account</span>
+        </button>
+
+        <mat-divider></mat-divider>
+
+        <button mat-button class="nav-button" (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </div>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="content">
+    <mat-card class="main-mat-card">
+      <mat-card-content class="main-mat-card-content">
+        <router-outlet></router-outlet>
+      </mat-card-content>
+    </mat-card>
+  </mat-sidenav-content>
+</mat-sidenav-container>

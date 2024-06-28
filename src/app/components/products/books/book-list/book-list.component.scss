@@ -23,7 +23,6 @@ table {
 }
 
 .crud-button{
-  display: flex;
   float: right;
   margin: 10px 10px 40px;
 }
@@ -38,4 +37,10 @@ table {
 
 .no-data{
   padding-left: 20px;
+}
+
+.mat-card-table{
+  padding-top: 25px;
+  padding-bottom: 25px;
+  margin-bottom: 30px;
 }

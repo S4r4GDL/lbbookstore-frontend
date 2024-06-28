@@ -1,12 +1,24 @@
 
-
+.form-container{
+  display:flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+.form-field-items{
+  justify-content: center;
+  flex-grow: 1;
+  flex-flow: row wrap;
+}
 .form-field-input {
-  width: 300px;
-  margin: 20px 20px 10px;
+  width: 350px;
+  margin-inline: 20px;
+  margin-top: 20px;
 }
 
 .book-form-field-textarea {
-  margin: 20px 20px 10px;
+  margin: 20px;
+  width: 350px;
 }
 
 .crud-button-save{
@@ -21,6 +33,8 @@
 }
 
 .table-title{
+  align-items: center;
+  justify-content: center;
   text-align: center;
   padding-top: 20px;
 }

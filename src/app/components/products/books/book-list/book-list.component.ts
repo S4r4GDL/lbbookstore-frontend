@@ -25,13 +25,13 @@ import {MatIcon} from "@angular/material/icon";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogsDeleteComponent} from "../../../basic/dialogs/delete/dialogs.delete.component";
 import {DialogsErrorComponent} from "../../../basic/dialogs/error/dialogs.error.component";
+import {LoginService} from "../../../login/shared/login.service";
 
 @Component({
   selector: 'app-book-list',
   standalone: true,
   imports: [
     NgForOf,
-    NgIf,
     MatTextColumn,
     MatTable,
     MatColumnDef,
@@ -55,7 +55,8 @@ import {DialogsErrorComponent} from "../../../basic/dialogs/error/dialogs.error.
     MatCard,
     MatCardContent,
     MatIcon,
-    NgClass
+    NgClass,
+    NgIf
   ],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.scss'
@@ -66,11 +67,17 @@ export class BookListComponent{
   initialSelection = [];
   allowMultiSelect = true;
   selection = new SelectionModel<Book>(this.allowMultiSelect, this.initialSelection);
-  displayedColumns: string[] = ['select', 'id', 'title', 'author', 'publisher', 'edition', 'releaseYear', 'description', 'quantity', 'price', 'lastUpdate', 'active','actions'];
+  displayedColumns: string[] = ['select', 'id', 'name', 'author', 'publisher', 'edition', 'releaseYear', 'description', 'quantity', 'price', 'lastUpdate', 'active','actions'];
   dataSource: MatTableDataSource<Book> = new MatTableDataSource<Book>();
   book!: Book;
+  currentUserRole!: string;
 
-  constructor(public bookService : BookService, public route: ActivatedRoute, public dialog: MatDialog) {
+  constructor(public bookService : BookService,
+              public route: ActivatedRoute,
+              public dialog: MatDialog,
+              public loginService: LoginService) {
+
+    this.currentUserRole = this.loginService.getUserRole();
     this.dataSource.data = route.snapshot.data['bookData'];
 
   }
@@ -109,9 +116,6 @@ export class BookListComponent{
         }
       );
   }
-
-
-
 
 
 
