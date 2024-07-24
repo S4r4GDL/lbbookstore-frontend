@@ -70,7 +70,7 @@ export class BookListComponent{
   displayedColumns: string[] = ['select', 'id', 'name', 'author', 'publisher', 'edition', 'releaseYear', 'description', 'quantity', 'price', 'lastUpdate', 'active','actions'];
   dataSource: MatTableDataSource<Book> = new MatTableDataSource<Book>();
   book!: Book;
-  currentUserRole!: string;
+  currentUserRole: string = "GUEST";
 
   constructor(public bookService : BookService,
               public route: ActivatedRoute,

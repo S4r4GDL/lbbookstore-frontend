@@ -1,52 +1,64 @@
-<div class="session">
-  <section class="mat-elevation-z8">
-    <div class="form-container">
-      <div class="image">
-        <img priority="1" ngSrc="assets/LB_login_page.png" alt="login" height="618" width="521">
-      </div>
+<main>
+  <div class="logo-container">
+    <img class="logo-img" ngSrc="/assets/logo_login.svg" alt="login_bg" height="156" width="247">
+    <h2>
+     <p>Discover endless stories waiting to be explored!</p>
 
-      <div class="form-group">
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    </h2>
+  </div>
 
-          <div class="table-title">
-            <h1>Login</h1>
-          </div>
-          <mat-divider></mat-divider>
+   <section class="mat-elevation-z8 form-container">
+     <div class="session">
+       <div class="form-container">
+         <section class="form-group">
+           <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
-          <div class="form-field-items">
+             <div class="table-title">
+               <h1>Login</h1>
+             </div>
+<hr>
+             <div class="form-field-items">
 
-            <div>
-              <mat-form-field class="form-field-input">
-                <mat-label>E-mail</mat-label>
-                <input formControlName="userName" name="userName" matInput #inputEmail type="email" maxlength="240"
-                       placeholder="example@gmail.com">
-                @if (loginForm.controls.userName.invalid) {
-                  <mat-error>E-mail is invalid</mat-error>
-                }
-              </mat-form-field>
-            </div>
+               <div>
+                 <mat-form-field class="form-field-input" appearance="outline">
+                   <mat-label>E-mail</mat-label>
+                   <input formControlName="userName"  name="userName" matInput #inputEmail type="email" maxlength="240"
+                          placeholder="example@gmail.com">
+                   @if (loginForm.controls.userName.invalid) {
+                     <mat-error>E-mail is invalid</mat-error>
+                   }
+                 </mat-form-field>
+               </div>
 
-            <div>
-              <mat-form-field class="form-field-input">
-                <mat-label>Password</mat-label>
-                <input formControlName="password" name="password" matInput #inputPassword type="password">
-                @if (loginForm.controls.password.invalid) {
-                  <mat-error>Password is invalid</mat-error>
-                }
-              </mat-form-field>
-            </div>
+               <div>
+                 <mat-form-field class="form-field-input" appearance="outline">
+                   <mat-label>Password</mat-label>
+                   <input formControlName="password" name="password" matInput #inputPassword type="password">
+                   @if (loginForm.controls.password.invalid) {
+                     <mat-error>Password is invalid</mat-error>
+                   }
+                 </mat-form-field>
+               </div>
 
-              <div class="buttons">
-                <button mat-flat-button class="button-submit" mat-raised-button
-                        matTooltip="Login" type="submit">
-                  Login
-                </button>
-              </div>
+               <div class="buttons">
+                 <button mat-flat-button class="button-submit" mat-raised-button
+                         matTooltip="Login" type="submit">
+                   Login
+                 </button>
+               </div>
+                 <p class="foot-form">
+                   Don’t have an account? <a [routerLink]="['/register']">Create one</a>
+                 <br>
+                 Or
+                 <a [routerLink]="['/']">keep going without sign-up</a>
+               </p>
 
-              <p class="foot-form">Don’t have an account? <a [routerLink]="['/register']">Create one</a></p>
-          </div>
-        </form>
-      </div>
-    </div>
-  </section>
-</div>
+             </div>
+           </form>
+         </section>
+       </div>
+     </div>
+   </section>
+
+
+ </main>

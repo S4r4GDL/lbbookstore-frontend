@@ -1,0 +1,12 @@
+$main-color: #b2a9e7;
+
+mat-toolbar{
+  background: $main-color;
+  position:fixed;
+  top:0;
+  z-index: 2;
+
+}
+.sidenav{
+  height: 100%;
+}

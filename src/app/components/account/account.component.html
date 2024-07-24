@@ -1,7 +1,94 @@
+<div class="session">
+  <section class="mat-elevation-z8">
+    <div class="form-container">
+      <div class="form-group">
+        <form [formGroup]="accountForm">
 
+          <div class="table-title">
+            <h1>Welcome</h1>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="table-title">
+            <h4>Edit data</h4>
+          </div>
+          <div class="form-field-items">
 
-<p>Welcome! You'll be able to edit or even delete your account soon</p>
-<p> Here's your data:
-  <br>
-  role: {{currentUserRole}}
-  </p>
+            <div>
+              <mat-form-field class="form-field-input">
+                <mat-label>E-mail</mat-label>
+                <input formControlName="username" name="userName" matInput #inputUsername type="email" maxlength="240"
+                       placeholder="example@gmail.com">
+                @if (accountForm.controls.username.invalid) {
+                  <mat-error>E-mail is invalid</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field class="form-field-input">
+                <mat-label>Password</mat-label>
+                <input formControlName="password" name="password" matInput #inputPassword type="password">
+                @if (accountForm.controls.password.invalid) {
+                  <mat-error>Password is invalid</mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <div>
+
+              <mat-form-field class="form-field-input">
+                <mat-label>Confirm password</mat-label>
+                <input formControlName="confirmPassword" name="confirmPassword" matInput #inputConfirmPassword
+                       type="password">
+                @if (accountForm.errors?.['PasswordNoMatch']) {
+                  <mat-error>Passwords doesn't match</mat-error>
+                } @else if (accountForm.controls.confirmPassword.invalid){
+                  <mat-error>Mandatory field</mat-error>
+                }
+              </mat-form-field>
+
+            </div>
+
+            <div>
+              <mat-form-field class="form-field-input">
+                <mat-label>Name</mat-label>
+                <input formControlName="name" name="name" matInput #inputName type="text" maxlength="240"
+                       placeholder="Your name">
+                @if (accountForm.controls.name.invalid) {
+                  <mat-error>Name is invalid</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field class="form-field-input">
+                <mat-label>Data of birth</mat-label>
+                <input formControlName="dataBirth" name="dataBirth" matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate">
+
+                <mat-hint>Must be an adult</mat-hint>
+                <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+
+                @if (accountForm.controls.dataBirth.invalid) {
+                  <mat-error>Data is invalid</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <button mat-flat-button class = "crud-button-save" mat-raised-button
+                    matTooltip="Save the book data" (click)="openUpdateDialog()">
+              Save
+            </button>
+
+            <button mat-flat-button mat-raised-button color="primary" class="bt-cancel-bottom"
+                    matTooltip="Cancel"  type="button" (click)="openCancelDialog()">
+              Cancel
+            </button>
+            </div>
+        </form>
+
+        <div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

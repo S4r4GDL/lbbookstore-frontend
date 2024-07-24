@@ -58,8 +58,8 @@ export class RegisterComponent {
   }
 
   registerForm = this.formBuilder.group({
-    name: new FormControl("", [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
-    confirmPassword: new FormControl("", [Validators.required]),
+    name: new FormControl("", [Validators.required, Validators.pattern('[a-zA-Z]*'), Validators.minLength(5)]),
+    confirmPassword: new FormControl("", [Validators.required, Validators.minLength(8)]),
     dataBirth: new FormControl( new Date(), [Validators.required]),
     username: new FormControl("", [Validators.required, Validators.email]),
     password: new FormControl("", [Validators.required]),
@@ -73,8 +73,10 @@ export class RegisterComponent {
   onSubmit() {
     console.error(' register form{}:', JSON.stringify(this.registerForm.value));
   if(this.registerForm.valid){
+
     this.user = Object.assign(this.user, this.registerForm.value);
-    console.error(' user{}:', JSON.stringify(this.user));
+    console.error('user{}:', JSON.stringify(this.user));
+
     this.loginService.register(this.user).subscribe(
       () => {
         this.router.navigateByUrl('/account');
@@ -88,7 +90,11 @@ export class RegisterComponent {
       }
     );
   } else {
-  console.log('Formulário inválido');
+    this.dialog.open(DialogsErrorComponent,
+    {
+      data: {error: "Form is invalid"
+      }
+    });
     }
   }
 

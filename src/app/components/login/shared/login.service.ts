@@ -13,22 +13,23 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class LoginService {
   private readonly TOKEN = 'TOKEN';
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
 
   private http!: HttpClient;
 
   private apiUrl!: String;
+  private user?: User;
 
-  constructor(http:HttpClient, private router:Router, public dialog: MatDialog,) {
+  constructor(http:HttpClient, private router:Router, public dialog: MatDialog) {
     this.http = http;
-    this.apiUrl = environment.apiUrl+"/auth";
+    this.apiUrl = environment.apiUrl;
   }
 
   public login(user: User) {
-    return this.http.post<TokenDTO>(`${this.apiUrl}/login`, user)
+    return this.http.post<TokenDTO>(`${this.apiUrl}/auth/login`, user)
       .pipe(
         tap((tokenDTO: TokenDTO) => {
-          this.storeJwtToken(tokenDTO.token);
+          this.doLoginUser(tokenDTO.token);
         })
       );
   }
@@ -36,18 +37,22 @@ export class LoginService {
   private doLoginUser(token: any) {
     this.storeJwtToken(token);
     this.isAuthenticatedSubject.next(true);
+    this.user = new User();
+    this.user.id =  this.getDecodedToken()?.sub;
+    this.user.name = this.getDecodedToken()?.name;
+    this.user.username = this.getDecodedToken()?.username;
+    this.user.dataBirth = this.getDecodedToken()?.dataBirth;
   }
 
   private storeJwtToken(jwt: string) {
-    console.log("TOKEN{}", JSON.stringify(jwt));
     localStorage.setItem(this.TOKEN, jwt);
   }
 
   register(user: User) {
-    return this.http.post<TokenDTO>(`${this.apiUrl}/register`, user)
+    return this.http.post<TokenDTO>(`${this.apiUrl}/auth/register`, user)
       .pipe(
         tap((tokenDTO: TokenDTO) => {
-          this.storeJwtToken(tokenDTO.token);
+          this.doLoginUser(tokenDTO.token);
         })
       );
   }
@@ -56,16 +61,16 @@ export class LoginService {
     localStorage.removeItem(this.TOKEN);
     this.isAuthenticatedSubject.next(false);
     this.router.navigate(['/login']);
+    this.user = new User();
   }
 
   isLoggedIn() {
-    return !!localStorage.getItem(this.TOKEN);
+    return localStorage.getItem(this.TOKEN);
   }
 
   public getDecodedToken(): any {
     const token = localStorage.getItem(this.TOKEN);
     if(token){
-      console.log("TOKEN DECODED{}", token);
       return jwtDecode(token);
     }
   }
@@ -77,6 +82,22 @@ export class LoginService {
     }else{
       return "GUEST";
     }
-
   }
+
+  getUser() {
+    if(this.isLoggedIn()){
+      return this.user;
+    }
+    return new User;
+  }
+
+  updateUser(currentUser: any){
+      return this.http.put<TokenDTO>(`${this.apiUrl}/auth/`, currentUser)
+        .pipe(
+          tap((tokenDTO: TokenDTO) => {
+            this.doLoginUser(tokenDTO.token);
+          })
+        );
+
+}
 }

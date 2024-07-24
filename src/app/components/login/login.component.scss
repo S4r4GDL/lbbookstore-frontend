@@ -1,43 +1,78 @@
+main {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: normal;
+  justify-content: right;
+  align-content: normal;
+  background-color: #d4d2fc;
+  background-image: url("/assets/login_bg.svg");
+}
+
+.logo-container {
+  height: 100%;
+  text-align: center;
+  justify-content: flex-start;
+  display: grid;
+  width: 70rem;
+  position: initial;
+}
+.logo-img{
+
+}
+
 .session{
   display: flex;
-  padding: 0;
   align-items: center;
   justify-content: center;
+  align-content: center;
+  background-color: white;
+
 }
 
 .form-container{
   display: inline-flex;
   justify-content: center;
+  width: 30rem;
+  height: 100%;
 
 }
-
+h2{
+  color: white;
+  text-align: center;
+  justify-content: center;
+  font-weight: lighter;
+  padding-left: 45%;
+}
 .login-form{
   flex-direction: column;
   justify-content: center;
 }
-.form-group{
+.form-group {
   margin: 25px 25px 10px;
   align-items: center;
   justify-content: center;
 }
-.image{
-  justify-content: flex-start;
-}
-.form-field-items, .buttons{
+.form-field-items{
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 8px;
+  padding-top: 20px;
 }
 .form-field-input {
-  width: 500px;
+  width: 250px;
   align-items: center;
   justify-content: center;
   height: min-content;
+  font-size: smaller;
 }
 .button-submit{
+
   margin-top: 5px;
-  width: 500px;
-  background-color: #86d56f;
+  width: 250px;
+  background-color: #b0a8e7 !important;
   align-items: center;
   align-content: flex-end;
   justify-content: center;
@@ -45,11 +80,18 @@
 .buttons{
   margin-top: 5px;
 }
-.table-title, .foot-form{
+.table-title{
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 
+}
+.foot-form{
+  padding-top: 20px;
+  align-items: flex-end;
+  justify-content: center;
+  text-align: center;
+  font-size: small;
 }

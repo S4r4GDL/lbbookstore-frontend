@@ -26,6 +26,7 @@ import {
 import {MatNativeDateModule} from "@angular/material/core";
 import {User} from "./shared/user";
 import {DialogsErrorComponent} from "../basic/dialogs/error/dialogs.error.component";
+import { AppComponent } from '../../app.component';
 
 @Component({
   selector: 'app-login',
@@ -85,18 +86,15 @@ export class LoginComponent {
 
       this.loginService.login(this.user).subscribe(
         () => {
-          this.router.navigateByUrl('/account');
-        },
-        (error) => {
-          this.dialog.open(DialogsErrorComponent,
-            {
-              data: {error: error.error.toString()
-              }
-            });
-        }
-      );
-    } else {
-      console.log('Formulário inválido');
+          this.router.navigateByUrl('');
+
+        });}
+      else {
+      this.dialog.open(DialogsErrorComponent,
+        {
+          data: {error: "Form is invalid"
+          }
+        });
     }
   }
 }

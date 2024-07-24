@@ -2,17 +2,18 @@
   <mat-sidenav mode="side" [opened]="status">
     <mat-nav-list>
       <div class="items">
+
         <button mat-button class="nav-button" [routerLink]="['/books']">
           <mat-icon>book</mat-icon>
           <span>Books</span>
         </button>
 
-        <button mat-button class="nav-button" [routerLink]="currentUser === 'ROLE_USER' ? '/cart' : '/login'">
+        <button mat-button class="nav-button" [routerLink]="['/cart']">
           <mat-icon>shopping_cart</mat-icon>
           <span>My Cart</span>
         </button>
 
-        <button mat-button class="nav-button" [routerLink]="currentUser === 'ROLE_USER' || currentUser === 'ROLE_ADMIN' ? '/account' : '/login'">
+        <button mat-button class="nav-button" [routerLink] ="['/login']">
           <mat-icon>account_circle</mat-icon>
           <span>Account</span>
         </button>

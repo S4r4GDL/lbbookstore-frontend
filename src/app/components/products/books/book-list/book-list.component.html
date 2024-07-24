@@ -5,7 +5,8 @@
       </div>
     <mat-divider ></mat-divider>
     <br>
-      <div class="crud-button-general" *ngIf="currentUserRole === 'ROLE_ADMIN'">
+    @if(currentUserRole === 'ROLE_ADMIN'){
+      <div class="crud-button-general">
           @if(dataSource.data.length > 0){
 
               <button mat-flat-button color="warn" class = "crud-button" mat-raised-button
@@ -14,13 +15,14 @@
               </button>
 
           }
-          <button  mat-flat-button color="primary" class = "crud-button" mat-raised-button
-                  matTooltip="Add a new book" [routerLink]="['/new']">
-            Add new
-          </button>
-
+            <button  mat-flat-button color="primary" class = "crud-button" mat-raised-button
+                    matTooltip="Add a new book" [routerLink]="['/new-book']">
+              Add new
+            </button>
         </div>
-        <br>
+      <br>
+    }
+
     <mat-divider ></mat-divider>
     @if (dataSource.data.length > 0){
 
@@ -29,7 +31,7 @@
             <div class="mat-card-table-content" >
                 <table mat-table [dataSource]="dataSource" >
 
-                <ng-container matColumnDef="select" >
+                <ng-container matColumnDef="select">
                     <th mat-header-cell *matHeaderCellDef [hidden]="!loginService.isLoggedIn()">
                       <mat-checkbox  [color]="" (change)="$event ? toggleAllRows() : null"
                                     [checked]="selection.hasValue() && isAllSelected()"

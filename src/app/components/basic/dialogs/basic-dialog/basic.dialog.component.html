@@ -1,10 +1,9 @@
 <h2 mat-dialog-title>{{this.title}}</h2>
 <mat-dialog-content>{{this.content}}</mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close [routerLink]="[this.route]" >{{redirectOption}}</button>
+  <button mat-button mat-dialog-close [routerLink]="[this.route]">{{redirectOption}}</button>
   @for (option of options; track option){
     <button mat-button mat-dialog-close>{{option}}</button>
   }
-
 </mat-dialog-actions>
 
