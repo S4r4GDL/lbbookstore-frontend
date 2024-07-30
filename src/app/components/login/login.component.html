@@ -1,22 +1,16 @@
-<main>
-  <div class="logo-container">
-    <img class="logo-img" ngSrc="/assets/logo_login.svg" alt="login_bg" height="156" width="247">
-    <h2>
-     <p>Discover endless stories waiting to be explored!</p>
-
-    </h2>
-  </div>
-
-   <section class="mat-elevation-z8 form-container">
-     <div class="session">
-       <div class="form-container">
+<app-login-register-layout title="Login"
+                           buttonName="login"
+                           (submit)="onSubmit()"
+                           [disableButton]="!loginForm.valid"
+                           message="Bringing Stories to Life and Making Every Reading Experience Unique"
+                           redirectText="Don't have an account?"
+                           redirectUrl="/register"
+                           redirect="register"
+>
          <section class="form-group">
+
            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
-             <div class="table-title">
-               <h1>Login</h1>
-             </div>
-<hr>
              <div class="form-field-items">
 
                <div>
@@ -40,25 +34,7 @@
                  </mat-form-field>
                </div>
 
-               <div class="buttons">
-                 <button mat-flat-button class="button-submit" mat-raised-button
-                         matTooltip="Login" type="submit">
-                   Login
-                 </button>
-               </div>
-                 <p class="foot-form">
-                   Don’t have an account? <a [routerLink]="['/register']">Create one</a>
-                 <br>
-                 Or
-                 <a [routerLink]="['/']">keep going without sign-up</a>
-               </p>
-
              </div>
            </form>
          </section>
-       </div>
-     </div>
-   </section>
-
-
- </main>
+</app-login-register-layout>

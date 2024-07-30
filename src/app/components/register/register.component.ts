@@ -19,6 +19,7 @@ import {NgOptimizedImage} from "@angular/common";
 import {MatNativeDateModule} from "@angular/material/core";
 import {DialogsErrorComponent} from "../basic/dialogs/error/dialogs.error.component";
 import {MatDialog} from "@angular/material/dialog";
+import {LoginRegisterLayoutComponent} from "../basic/login-register-layout/login-register-layout.component";
 
 @Component({
   selector: 'app-register',
@@ -44,7 +45,8 @@ import {MatDialog} from "@angular/material/dialog";
     MatDatepickerInput,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSuffix
+    MatSuffix,
+    LoginRegisterLayoutComponent
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'

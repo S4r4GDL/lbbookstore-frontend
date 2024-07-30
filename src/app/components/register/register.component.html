@@ -1,22 +1,31 @@
-<div class="session">
-  <section class="mat-elevation-z8">
-    <div class="form-container">
-      <div class="image">
-        <img priority ngSrc="assets/LB_login_page.png" alt="login" height="618" width="521">
-      </div>
+<app-login-register-layout title="Register"
+                           buttonName="register"
+                           (submit)="onSubmit()"
+                           [disableButton]="!registerForm.valid"
+                           message="Each page turns into a new adventure and every chapter unlocks a world of imagination."
+                           redirectText="Already have an account?"
+                           redirectUrl="/login"
+                           redirect="login"
+>
 
-      <div class="form-group">
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <section class="form-group">
 
-          <div class="table-title">
-            <h1>Register</h1>
-          </div>
-          <mat-divider></mat-divider>
-
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
           <div class="form-field-items">
 
             <div>
-              <mat-form-field class="form-field-input">
+              <mat-form-field class="form-field-input" appearance="outline">
+                <mat-label>Name</mat-label>
+                <input formControlName="name" name="name" matInput #inputName type="text" maxlength="240"
+                       placeholder="Your name">
+                @if (registerForm.controls.name.invalid) {
+                  <mat-error>Name is invalid</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field class="form-field-input" appearance="outline">
                 <mat-label>E-mail</mat-label>
                 <input formControlName="username" name="userName" matInput #inputUsername type="email" maxlength="240"
                        placeholder="example@gmail.com">
@@ -27,7 +36,7 @@
             </div>
 
             <div>
-              <mat-form-field class="form-field-input">
+              <mat-form-field class="form-field-input" appearance="outline">
                 <mat-label>Password</mat-label>
                 <input formControlName="password" name="password" matInput #inputPassword type="password">
                 @if (registerForm.controls.password.invalid) {
@@ -37,7 +46,7 @@
             </div>
               <div>
 
-                <mat-form-field class="form-field-input">
+                <mat-form-field class="form-field-input" appearance="outline">
                   <mat-label>Confirm password</mat-label>
                   <input formControlName="confirmPassword" name="confirmPassword" matInput #inputConfirmPassword
                          type="password">
@@ -51,18 +60,7 @@
               </div>
 
               <div>
-                <mat-form-field class="form-field-input">
-                  <mat-label>Name</mat-label>
-                  <input formControlName="name" name="name" matInput #inputName type="text" maxlength="240"
-                         placeholder="Your name">
-                  @if (registerForm.controls.name.invalid) {
-                    <mat-error>Name is invalid</mat-error>
-                  }
-                </mat-form-field>
-              </div>
-
-              <div>
-                <mat-form-field class="form-field-input">
+                <mat-form-field class="form-field-input" appearance="outline">
                   <mat-label>Data of birth</mat-label>
                   <input formControlName="dataBirth" name="dataBirth" matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate">
 
@@ -76,18 +74,7 @@
                 </mat-form-field>
               </div>
 
-              <div  class="buttons">
-                <button mat-flat-button class="button-submit" mat-raised-button
-                        matTooltip="Login" type="submit">
-                  Create
-                </button>
-              </div>
-              <div>
-                <p class="foot-form">Already have an account? <a [routerLink]="['/login']">Login</a></p>
-              </div>
           </div>
-        </form>
-      </div>
-    </div>
+    </form>
   </section>
-</div>
+</app-login-register-layout>

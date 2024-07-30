@@ -1,0 +1,41 @@
+<main class="main">
+  <div class="logo-container">
+    <img priority class="logo-img" ngSrc="/assets/logo_login.svg" alt="login_bg" height="156" width="247">
+    <h2>
+      <p>{{message}}</p>
+    </h2>
+  </div>
+  <section class="mat-elevation-z8 form-container">
+    <div class="session">
+      <div class="form-container">
+
+        <section class="form-group">
+          <div class="table-title">
+            <h1>{{ title }}</h1>
+          </div>
+          <hr>
+          <ng-content></ng-content>
+
+          <div class="buttons">
+            <button mat-flat-button class="button-submit" mat-raised-button
+                    matTooltip="submit" (click)="submit()" [disabled]="disableButton">
+              {{buttonName}}
+            </button>
+          </div>
+
+          <p class="foot-form">
+            {{redirectText}}
+            <a [routerLink]="[redirectUrl]" >{{redirect}}</a>
+            <br>
+            Or
+            <a [routerLink]="['/']">keep going without sign-up</a>
+          </p>
+
+        </section>
+
+      </div>
+    </div>
+  </section>
+
+
+</main>
